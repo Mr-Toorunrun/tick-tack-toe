@@ -33,3 +33,7 @@
 
 # System specific
 x64
+Debug
+*vcxproj*
+
+
