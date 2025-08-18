@@ -138,13 +138,12 @@ void showBoard(char board[3][3]) {
 }
 
 bool checkAction(char board[3][3], int answer) {
-	if (board[(answer - 1) / 3][(answer - 1) % 3] == '-') {
+	if (board[(answer - 1) / 3][(answer - 1) % 3 ] == '-' && answer > 0 && answer < 10) {
 		return true;
 	}
-	else if (answer > 0 && answer < 10) {
-		return true;
+	else {
+		return false;
 	}
-	return false;
 }
 
 char setAction(char board[3][3], int answer) {
