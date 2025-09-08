@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <array>
 #include <string>
 using namespace std;
@@ -67,7 +67,7 @@ void thinking(char board[3][3], int t) {
 	}
 }
 // check the winner
-void winCheack(char board[3][3]) {
+bool winCheck(char board[3][3]) {
 	// board's data change to number
 	char number[3][3] = {
 		{board[0][0],board[0][1],board[0][2] },
@@ -88,45 +88,46 @@ void winCheack(char board[3][3]) {
 		for (int i = 0; i < 3; i++) {
 			if (number[i][0] + number[i][1] + number[i][2] == 3) {
 				cout << "winner is the o!" << endl;
-				return;
+				return true;
 			}
 			else if (number[i][0] + number[i][1] + number[i][2] == -3) {
 				cout << "winner is the x!" << endl;
-				return;
+				return true;
 			}
 		}
 		//check the col
 		for (int i = 0; i < 3; i++) {
 			if (number[0][i] + number[1][i] + number[2][i] == 3) {
 				cout << "winner is the o!" << endl;
-				return;
+				return true;
 			}
 			else if (number[0][i] + number[1][i] + number[2][i] == -3) {
 				cout << "winner is the x!" << endl;
-				return;
+				return true;
 			}
 		}
 		//check the upper right diagonal
 		if (number[0][2] + number[1][1] + number[2][0] == 3) {
 			cout << "winner is the o!" << endl;
+			return  true;
 		}
 		else if (number[0][2] + number[1][1] + number[2][0] == -3) {
 			cout << "winner is the x!" << endl;
-			return;
+			return true;
 		}
 		//check the upper left diagonal
 		if (number[0][0] + number[1][1] + number[2][2] == 3) {
 			cout << "winner is the o!" << endl;
-			return;
+			return true;
 		}
 		else if (number[0][0] + number[1][1] + number[2][2] == -3) {
 			cout << "winner is the x!" << endl;
-			return;
+			return true;
 		}
 	}
+	return false;
 }
 
-# 
 void showBoard(char board[3][3]) {
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
@@ -137,8 +138,11 @@ void showBoard(char board[3][3]) {
 	}
 }
 
-bool checkAction(char board[3][3], int answer) {
-	if (board[(answer - 1) / 3][(answer - 1) % 3 ] == '-' && answer > 0 && answer < 10) {
+bool checkAction(char board[3][3], string answer) {
+	if (answer.length() == 1 && isdigit(answer[0])&&
+		board[(stoi(answer) - 1) / 3][(stoi(answer) - 1) % 3 ] == '-' &&
+		stoi(answer) >= 1 && stoi(answer) <= 9) {
+
 		return true;
 	}
 	else {
@@ -146,19 +150,20 @@ bool checkAction(char board[3][3], int answer) {
 	}
 }
 
-char setAction(char board[3][3], int answer) {
-	board[(answer - 1) / 3][(answer - 1) % 3] = 'o';
-	return board[3][3];
+void setAction(char board[3][3], string answer) {
+	board[(stoi(answer) - 1) / 3][(stoi(answer) - 1) % 3] = 'o';
 }
 
-int getO(char board[3][3], int& answer) {
-	cout << endl;
+bool getO(char board[3][3], string& answer) {
+	cout << "What do you pick? (1-9): ";
 	cin >> answer;
-	while (checkAction(board, answer) == false) {
-		cout << endl << "Give me the valid action." << endl;
-		cin >> answer;
+	if (!checkAction(board, answer)) {
+		cout << "Give me a valid action." << endl;
+		return false;
 	}
-	return answer;
+	else {
+		return true;
+	}
 }
 
 int main() {
@@ -167,13 +172,17 @@ int main() {
 		{'-','-','-'},
 		{'-','-','-'}
 	};
+
 	for (int t = 0; t < 9; t++) {
+
 		showBoard(board);
-		winCheack(board);
+		if (winCheck(board)) {
+			break;
+		}
 		if (t % 2 == 0) {
-			cout << endl << "what do you pick ?" << endl;
-			int answer = 0;
-			getO(board, answer);
+			string answer;
+			while (!getO(board, answer)) {
+			}
 			setAction(board, answer);
 		}
 		else {
@@ -181,7 +190,10 @@ int main() {
 			thinking(board, t);
 		}
 	}
-	showBoard(board);
+
+	//showBoard(board);
+
+	return 0;
 }
 
 
