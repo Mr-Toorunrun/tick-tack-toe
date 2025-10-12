@@ -3,9 +3,17 @@
 using namespace std;
 
 
+class Action {
 
-bool checkAction(char board[3][3], string answer);
+public:
 
-void setAction(char board[3][3], string answer);
+	Action();
+	static bool checkAction(char board[3][3], string answer);
 
-void thinking(char board[3][3], int t);
+	static void setAction(char board[3][3], string answer);
+
+	static void thinking(char board[3][3], int t);
+
+
+
+};

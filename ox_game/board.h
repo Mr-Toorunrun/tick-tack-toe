@@ -5,11 +5,21 @@ using namespace std;
 
 
 
-bool winCheck(char board[3][3]);
 
-bool getZero(char board[3][3], string& answer);
+class Board {
 
-void showBoard(char board[3][3]);
+public:
+
+	Board();
+	static bool winCheck(char board[3][3]);
+
+	static bool getZero(char board[3][3], string& answer);
+
+	static void showBoard(char board[3][3]);
 
 
+
+
+
+};
 
